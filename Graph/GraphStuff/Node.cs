@@ -11,6 +11,7 @@ namespace Graph.GraphStuff
     {
         public static int totalNumber = 0;
         private int index;
+    
 
         public Node()
         {

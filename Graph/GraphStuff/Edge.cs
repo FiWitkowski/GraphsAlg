@@ -24,6 +24,12 @@ namespace Graph.GraphStuff
             numberOfEdges++;
         }
 
+        public bool Contains(Node node)
+        {
+            if (nodes.X.Equals(node) || nodes.Y.Equals(node))
+                return true;
+            return false;
+        }
 
     }
 }
