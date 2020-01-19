@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace WeightedGraphRandomizer
 {
-    public class Pair
+    public class Point
     {
         private double x, y;
 
 
 
-        public Pair(double x, double y)
+        public Point(double x, double y)
         {
             X = x;
             Y = y;

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{98852F14-84C3-4A35-BF70-2D7A86132ECD}</ProjectGuid>
+    <ProjectGuid>{A972D5B9-355B-4760-A505-2E586B3C9863}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>WeightedGraphRandomizer</RootNamespace>
-    <AssemblyName>WeightedGraphRandomizer</AssemblyName>
+    <RootNamespace>Graph</RootNamespace>
+    <AssemblyName>Graph</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Point.cs" />
-    <Compile Include="Pane.cs" />
+    <Compile Include="GraphStuff\Edge.cs" />
+    <Compile Include="GraphStuff\Node.cs" />
+    <Compile Include="GraphStuff\PairOfNodes.cs" />
+    <Compile Include="GraphStuff\Graph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,33 +9,39 @@ namespace WeightedGraphRandomizer
 {
     class Pane
     {
-        private List<Pair> pane;
+        private List<Point> pane;
         Random rand;
 
         public Pane() {
             rand = new Random(DateTime.Now.Millisecond);
-            pane = new List<Pair>(); 
+            pane = new List<Point>(); 
         }
 
         public Pane(int n) {
             rand= new Random(DateTime.Now.Millisecond);
-            pane = new List<Pair>();
+            pane = new List<Point>();
             pane = addPoints(n);
         }
 
-        public Pair addPoint()
+        public Point addPoint()
         {
             double x = rand.NextDouble()*1000;
             double y = rand.NextDouble()*1000;
-            Pair point = new Pair(x, y);
+            Point point = new Point(x, y);
             pane.Add(point);
 
             return point;
         }
 
-        public List<Pair> addPoints(int number)
+        public Point addPoint(double x,double y)
         {
-            List<Pair> listPair = new List<Pair>();
+            Point point = new Point(x, y);
+            pane.Add(point);
+            return point;
+        }
+        public List<Point> addPoints(int number)
+        {
+            List<Point> listPair = new List<Point>();
             for (int i = 0; i < number; i++)
             {
                 listPair.Add(addPoint());
@@ -47,9 +53,9 @@ namespace WeightedGraphRandomizer
             int n = pane.Count();
             double[,] distances = new double[n,n];
             double x;
-            foreach(Pair p1 in pane)
+            foreach(Point p1 in pane)
             {
-                foreach(Pair p2 in pane)
+                foreach(Point p2 in pane)
                 {
                     if (!p2.Equals(p1))
                     {
@@ -93,41 +99,13 @@ namespace WeightedGraphRandomizer
                 
             }
         }
-        public static void printDoubles(double[] table)
-        {
-            int indexer = 0;
-            foreach(double d in table)
-            {
-                Console.Out.Write(d + "\t");
-                indexer++;
-                if (indexer % 5 == 0)
-                    Console.Out.WriteLine();
-            }
-                
-        }
+
 
         static void Main(string[] args)
         {
-            double[] sto = new double[10];
-            Random rand = new Random(DateTime.Now.Millisecond);
-            for (int i = 0; i < 10; i++)
-                sto[i] = rand.NextDouble();
-            Pane.printDoubles(sto);
-            Console.WriteLine("\n");
-            for (int j = 0; j < 1000; j++)
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    if (sto[i] <= 0.5)
-                        sto[i] =sto[i]*2;
-                    else
-                        sto[i] = sto[i]/2;
-                }
-                Pane.printDoubles(sto);
-                Console.WriteLine("\n");
-                
-            }
-            Console.ReadKey();
+     
+
+   
         }
     }
 }
