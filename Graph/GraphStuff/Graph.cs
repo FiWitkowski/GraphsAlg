@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,8 +26,30 @@ namespace Graph.GraphStuff
 
         }
 
+        public Graph(string path)
+        {
+            
+                using(StreamReader reader = new StreamReader(path))
+                {
+                 string line;
+                    bool firstLine=true;
+                    while((line = reader.ReadLine()) != null){
+                    if (firstLine)
+                    {
+                        int noOfNodes=line.Split('\t').Count();
+                        for (int i = 0; i < noOfNodes; i++)
+                            Nodes.Add(new Node());
+                    }
+
+
+                    }
+              
+                }
+        }
+
         static void Main(string[] args)
         {
+            string path = @"C:\Users\Filip\Desktop\Grafy\15.txt";
         }
     }
 }
