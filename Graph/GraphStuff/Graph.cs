@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Graph.Algorythms;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Graph.GraphStuff
 {
+    [Serializable]
     public class Graph
     {
         private List<Node> nodes;
@@ -15,6 +17,18 @@ namespace Graph.GraphStuff
 
         public List<Node> Nodes { get => nodes; private set => nodes = value; }
         public List<Edge> Edges { get => edges; private set => edges = value; }
+
+        public Graph()
+        {
+            nodes = new List<Node>();
+            edges = new List<Edge>();
+        }
+
+        public Graph(List<Node> nodes,List<Edge> edges)
+        {
+            Nodes = nodes;
+            Edges = edges;
+        }
 
         public Graph(Graph g)
         {
@@ -80,6 +94,18 @@ namespace Graph.GraphStuff
             }
             return null;
         }
+
+        public bool IsTree()
+        {
+            DFS dfs = new DFS(this);
+            return dfs.DoForTree();
+        }
+
+        public Graph MinimumSpanningTree()
+        {
+            Prim prim = new Prim(this);
+            return prim.Do();
+        }
         
         public override string ToString()
         {
@@ -93,7 +119,10 @@ namespace Graph.GraphStuff
                     else
                     {
                         Edge edge = GetEdge(Nodes[i], Nodes[j]);
-                        builder.Append(edge.Weight + "\t");
+                        if (edge==null)
+                            builder.Append("0\t");
+                        else
+                            builder.Append(edge.Weight + "\t");
                     }
                     
                 }
@@ -102,12 +131,67 @@ namespace Graph.GraphStuff
             return builder.ToString();
         }
 
+        public void Serialize(string path)
+        {
+            using(StreamWriter writer = new StreamWriter(path))
+            {
+                writer.Write(this.ToString());
+            }
+        }
+
+        
+
+        public List<Node> GetNeighbors(Node n)
+        {
+            List<Node> nodes = new List<Node>();
+            List<Edge> edges = GetEdges(n);
+            foreach(Edge e in edges)
+            {
+                if (e.Nodes.X.Equals(n))
+                    nodes.Add(e.Nodes.Y);
+                else
+                    nodes.Add(e.Nodes.X);
+            }
+            return nodes;
+        }
+
+
+
+        //For further usees
+        private Graph Merge(Graph treeMatching)
+        {
+            Graph outputG = new Graph(this);
+            foreach(Edge edge in treeMatching.Edges)
+            {
+                outputG.Edges.Add(edge);
+            }
+            return outputG;
+        }
+
+        public Graph PrepareGraphForMatching()
+        {
+            Graph tree = this.MinimumSpanningTree();
+            List<Node> oddNodes = tree.Nodes.Where(e => tree.GetEdges(e).Count % 2 == 1).ToList();
+            List<Edge> newEdges = new List<Edge>();
+            foreach(Node node in oddNodes)
+            {
+                this.GetEdges(node).ForEach(e => newEdges.Add(e));
+            }
+            return new Graph(oddNodes,newEdges);
+        }
+
+
+
         static void Main(string[] args)
         {
             string path = @"C:\Users\Filip\Desktop\Grafy\15.txt";
             Graph g = new Graph(path);
-            Console.WriteLine(g.ToString());
-            
+
+
+            Console.WriteLine(g.PrepareGraphForMatching().ToString());
+            Console.WriteLine(g.MinimumSpanningTree().ToString());
+
+
             Console.ReadKey();
         }
     }
