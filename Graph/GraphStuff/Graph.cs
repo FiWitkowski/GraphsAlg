@@ -226,7 +226,7 @@ namespace Graph.GraphStuff
 
         static void Main(string[] args)
         {
-            string path = @"C:\Users\Filip\Desktop\Grafy\15.txt";
+            string path = @"C:\Users\Filip\Desktop\Grafy\30.txt";
             Graph g = new Graph(path);
             Graph ch = g.Christofides();
             Console.WriteLine(ch.ToString());
