@@ -27,6 +27,7 @@ namespace Graph.Algorythms
 
             if(g.Edges.Count==0)
                 return false;
+            
 
             DFS dfs = new DFS(g);
             return !dfs.IsConnected();
@@ -44,11 +45,12 @@ namespace Graph.Algorythms
         public bool EulerProceed(Node node)
         {
             List<Edge> possibleEdges = graph.GetEdges(node);
+            Console.WriteLine(graph.ToString());
             foreach(Edge edge in possibleEdges)
             {
                 if(!IsBridge(edge))
                 {
-                    Edge usedEdge = possibleEdges[0];
+                    Edge usedEdge = edge;
                     Node goToNode = graph.GetSecondNode(usedEdge, node);
                     graph.RemoveEdge(usedEdge);
                     qEdges.Enqueue(usedEdge);

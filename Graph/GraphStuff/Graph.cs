@@ -227,10 +227,11 @@ namespace Graph.GraphStuff
 
         static void Main(string[] args)
         {
-            WeightedGraphRandomizer.Pane pane = new Pane(20);
+            int nOfNodes = 13;
+            WeightedGraphRandomizer.Pane pane = new Pane(nOfNodes);
             
-            string path = @"C:\Users\Filip\Desktop\Grafy\20.txt";
-            pane.savePane(path);
+            string path = @"C:\Users\Filip\Desktop\Grafy\"+nOfNodes+".txt";
+            //9pane.savePane(path);
             Graph g = new Graph(path);
             Graph ch = g.Christofides();
             Console.WriteLine(g);

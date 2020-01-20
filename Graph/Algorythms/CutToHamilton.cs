@@ -28,6 +28,7 @@ namespace Graph.Algorythms
         {
             Queue<Node> qNodes = new Queue<Node>();
 
+            
             while (qEdges.Count != 0)
             {
                 Edge e = qEdges.Dequeue();
