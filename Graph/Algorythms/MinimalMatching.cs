@@ -69,18 +69,19 @@ namespace Graph.Algorythms
                 {
                     MatchEdge(edge);
                     matching.Add(edge);
-                    if (matching.Count == g.Nodes.Count/2)
+                    double cost = CountCost(matching);
+                    if (cost < bestCost)
                     {
-                        double cost=CountCost(matching);
-                        if (cost < bestCost)
+
+                        if (matching.Count == g.Nodes.Count / 2)
                         {
-                            bestMatching.Clear();
-                            matching.ForEach(e => bestMatching.Add(e));
-                            bestCost = cost;
+                             bestMatching.Clear();
+                             matching.ForEach(e => bestMatching.Add(e));
+                             bestCost = cost;
                         }
+                        else
+                            ExpandMatching(matching);
                     }
-                    else
-                        ExpandMatching(matching);
                     matching.Remove(edge);
                     UnmatchEdge(edge);
                 }

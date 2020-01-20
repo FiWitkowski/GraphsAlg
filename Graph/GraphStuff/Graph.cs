@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeightedGraphRandomizer;
 
 namespace Graph.GraphStuff
 {
@@ -226,9 +227,13 @@ namespace Graph.GraphStuff
 
         static void Main(string[] args)
         {
-            string path = @"C:\Users\Filip\Desktop\Grafy\30.txt";
+            WeightedGraphRandomizer.Pane pane = new Pane(20);
+            
+            string path = @"C:\Users\Filip\Desktop\Grafy\20.txt";
+            pane.savePane(path);
             Graph g = new Graph(path);
             Graph ch = g.Christofides();
+            Console.WriteLine(g);
             Console.WriteLine(ch.ToString());
 
 

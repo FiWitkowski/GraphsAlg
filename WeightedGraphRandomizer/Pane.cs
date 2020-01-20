@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WeightedGraphRandomizer
 {
-    class Pane
+    public class Pane
     {
         private List<Point> pane;
         Random rand;
