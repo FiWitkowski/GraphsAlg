@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Graph.GraphStuff
 {
+    
+
     [Serializable]
     public class Graph
     {
@@ -85,14 +87,19 @@ namespace Graph.GraphStuff
             return neighbors;
         }
 
-        public Edge GetEdge(Node x, Node y)
+        public void RemoveEdge(Edge edge)
         {
-            foreach(Edge edge in Edges)
-            {
-                if (edge.Contains(x) && edge.Contains(y))
-                    return edge;
-            }
-            return null;
+            Edges.Remove(edge);
+        }
+
+        public Node GetSecondNode(Edge e, Node n)
+        {
+            if (!e.Contains(n))
+                return null;
+            if (e.Nodes.X.Equals(n))
+                return e.Nodes.Y;
+            else
+                return e.Nodes.X;
         }
 
         public bool IsTree()
@@ -106,7 +113,17 @@ namespace Graph.GraphStuff
             Prim prim = new Prim(this);
             return prim.Do();
         }
-        
+
+        public Edge GetEdge(Node x, Node y)
+        {
+            foreach (Edge edge in Edges)
+            {
+                if (edge.Contains(x) && edge.Contains(y))
+                    return edge;
+            }
+            return null;
+        }
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -157,28 +174,53 @@ namespace Graph.GraphStuff
 
 
 
-        //For further usees
-        private Graph Merge(Graph treeMatching)
-        {
-            Graph outputG = new Graph(this);
-            foreach(Edge edge in treeMatching.Edges)
-            {
-                outputG.Edges.Add(edge);
-            }
-            return outputG;
-        }
+        
 
-        public Graph PrepareGraphForMatching()
+        public KeyValuePair<Graph,Graph> PrepareGraphForMatching()
         {
             Graph tree = this.MinimumSpanningTree();
             List<Node> oddNodes = tree.Nodes.Where(e => tree.GetEdges(e).Count % 2 == 1).ToList();
             List<Edge> newEdges = new List<Edge>();
             foreach(Node node in oddNodes)
             {
-                this.GetEdges(node).ForEach(e => newEdges.Add(e));
+                foreach(Edge e in GetEdges(node))
+                {
+                    if (!newEdges.Contains(e)&&oddNodes.Contains(e.Nodes.X)&&oddNodes.Contains(e.Nodes.Y))
+                        newEdges.Add(e);
+                }
             }
-            return new Graph(oddNodes,newEdges);
+            KeyValuePair<Graph,Graph> pair = new KeyValuePair<Graph,Graph>(tree, new Graph(oddNodes, newEdges));
+            return pair;
         }
+
+        private double CountCost()
+        {
+            double cost = 0;
+            Edges.ForEach(e => cost += e.Weight);
+            return cost;
+        }
+
+        public Graph MinimalMatching()
+        {
+            MinimalMatching alg = new MinimalMatching(this);
+            return new Graph(this.Nodes,alg.Do());
+        }
+
+        public Graph MergeWithMatching(List<Edge> treeMatching)
+        {
+            Graph outputG = new Graph(this);
+            treeMatching.ForEach(e => outputG.Edges.Add(e));
+            return outputG;
+        }
+
+        public Graph Christofides()
+        {
+            Christofides ch = new Christofides(this);
+            return ch.Do();
+        }
+
+
+
 
 
 
@@ -186,10 +228,8 @@ namespace Graph.GraphStuff
         {
             string path = @"C:\Users\Filip\Desktop\Grafy\15.txt";
             Graph g = new Graph(path);
-
-
-            Console.WriteLine(g.PrepareGraphForMatching().ToString());
-            Console.WriteLine(g.MinimumSpanningTree().ToString());
+            Graph ch = g.Christofides();
+            Console.WriteLine(ch.ToString());
 
 
             Console.ReadKey();

@@ -52,7 +52,7 @@ namespace WeightedGraphRandomizer
         {
             int n = pane.Count();
             double[,] distances = new double[n,n];
-            double x;
+            
             foreach(Point p1 in pane)
             {
                 foreach(Point p2 in pane)

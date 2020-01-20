@@ -65,5 +65,33 @@ namespace Graph.Algorythms
             return isTree;
         }
 
+        public bool IsConnected()
+        {
+            List<Node> avaiableNodes = g.Nodes.Where(e => g.GetEdges(e).Count > 0).ToList();
+            if (avaiableNodes.Count == 0)
+                return true;
+
+            IsConnectedProceed(avaiableNodes[0]);
+
+            foreach(Node node in avaiableNodes)
+            {
+                if (!zajete.Contains(node))
+                    return false;
+            }
+
+
+            return true;
+        }
+        public void IsConnectedProceed(Node node)
+        {
+            zajete.Add(node);
+            foreach (Node n in g.GetNeighbors(node))
+            {
+                if (!zajete.Contains(n))
+                    Continue(n);
+            }
+        }
+
+
     }
 }

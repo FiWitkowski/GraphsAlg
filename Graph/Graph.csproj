@@ -176,7 +176,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorythms\Christofides.cs" />
+    <Compile Include="Algorythms\CutToHamilton.cs" />
     <Compile Include="Algorythms\DFS.cs" />
+    <Compile Include="Algorythms\EulerPath.cs" />
+    <Compile Include="Algorythms\MinimalMatching.cs" />
     <Compile Include="Algorythms\Prim.cs" />
     <Compile Include="GraphStuff\Edge.cs" />
     <Compile Include="GraphStuff\Node.cs" />
